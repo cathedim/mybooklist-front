@@ -1,0 +1,148 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica;
+}
+
+#navbar {
+    background-color: #dbc2db;
+    align-items: center;
+    display: flex;
+    width: 100%;
+}
+
+#img-navbar {
+    width: 50px; 
+    height: 50px;
+    margin: 1px;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+#titulo-navbar {
+    font-size: 20px;
+    display:inline;
+    margin: 20px;
+}
+
+#busca {
+    margin-left: auto;
+    order: 2;
+    padding: 20px;
+}
+
+#texto-busca {
+}
+
+#icon-busca {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    margin-left: 4px;
+}
+
+#div-inicial {
+    display: inline-flex;
+    margin-left: 20px;
+    padding: 5px;
+    align-items: center;
+}
+
+h3 {
+    margin-right:15px;
+}
+
+#btn-adicionar {
+    background-color: #dbc2db;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+#div-adicionar {
+    display: none;
+    border: 2px solid #dbc2db;
+    padding: 20px;
+    margin: 0 120px;
+}
+
+.reveal {
+    position: relative;
+    transform: translateY(150px);
+    opacity: 0;
+    transition: 2s all ease;
+}
+
+.reveal.active {
+    transform: translateY(0);
+    opacity: 1;
+} 
+
+#ajuda {
+    display: inline-block;
+}
+
+#icon-ajuda {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: #dbc2db;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+#texto-ajuda {
+    display: inline-block;
+    /*top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(36, 62, 206, 0.6);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    display: in;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    /* transition effect. not necessary *
+    transition: opacity .2s, visibility .2s;*/
+    text-decoration: underline;
+    text-decoration-color: #dbc2db;
+    visibility: hidden;
+    transition: width .5s;
+    font-size: small;
+}
+
+#ajuda:hover #texto-ajuda {
+  visibility: visible;
+}
+
+li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    border: 2px dashed #dbc2db;
+    text-align: center;
+}
+
+.capa {
+    width: 9em;
+    height: 13em;
+}
+
+.lixeira {
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+}
+
+#loading {
+    margin: auto;
+    display: block;
+}

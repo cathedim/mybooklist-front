@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>mybooklist</title>
+        
+        <link rel="icon" type="image/gif/png" href="img/book-navbar.png">        
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+
+    <body>
+        <header id="navbar">
+            <img id="img-navbar" src="img/book-navbar.png" onClick="window.location.reload()">
+            <h1 id="titulo-navbar">mybooklist</h1>
+            <div id="busca">
+                <input id="texto-busca" placeholder="Busque por um livro"></input>
+                <img id="icon-busca" src="img/search.png" onClick="buscarLivro()">
+            </div>
+        </header>
+
+        <main>
+            <div id="div-inicial">
+                <h3>Livros</h3>
+                <img id="btn-adicionar" onClick="mostraAdicionarLivro()" src="img/add.png">
+            </div>
+            <div id="div-adicionar">
+                <h4>Adicionar novo livro</h4>
+                <form id="formulario">
+                    <label for="nome">Nome</label>
+                    <br><input type="text" id="nome" name="nome">
+                    <br><label for="autor">Autor</label>
+                    <br><input type="text" id="autor" name="autor">
+                    <br><label for="ano_publicacao">Ano de publicação</label>
+                    <br><input type="text" id="ano_publicacao" name="ano_publicacao">
+                    <br><label for="capa">Capa</label>
+                    <div id="ajuda">
+                        <img id="icon-ajuda" src="img/help.png" data-tooltip="Endereço do link da imagem">
+                        <p id="texto-ajuda">Endereço do link da imagem</p>
+                    </div>
+                    <br><input type="text" id="capa" name="capa"><br><br>
+                    <input type="submit" value="Adicionar">
+                </form> 
+            </div>
+
+            <ul id="livros"></ul>
+        </main>
+    
+        <script src="scripts.js"></script>
+    </body>
+</html>

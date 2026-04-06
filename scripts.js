@@ -67,9 +67,6 @@ async function buscarLivro() {
   let url = `http://127.0.0.1:5000/buscar_livro?${params}`;
   const resposta = await fetch(url, {
     method: 'get',
-    headers: {
-      "Content-Type": "application/json"
-    },
     body: null
   })
     .then((response) => response.json())
@@ -108,17 +105,13 @@ async function buscarLivro() {
 
 function deletarLivro(nome) {
   if (confirm("Deseja deletar o livro '" + nome + "'?")) {
-    const params = new URLSearchParams({
-        nome: nome
-    });
+    const dados = new FormData();
+    dados.append('nome', nome);
 
-    let url = `http://127.0.0.1:5000/deletar_livro?${params}`;
+    let url = 'http://127.0.0.1:5000/deletar_livro';
     fetch(url, {
       method: 'delete',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: null
+      body: dados
     })
       .then((response) => response.json())
       .catch((error) => {
@@ -140,19 +133,17 @@ function recarregarLivros() {
 
 formulario.addEventListener("submit", function(e) {
   e.preventDefault();
-  const dados = new FormData(formulario);
 
-  var form = {};
-  dados.forEach((value, key) => form[key] = value);
-  var json = JSON.stringify(form);
-
+  const dados = new FormData();
+  dados.append('nome', document.getElementById("nome").value);
+  dados.append('autor', document.getElementById("autor").value);
+  dados.append('ano_publicacao', document.getElementById("ano_publicacao").value);
+  dados.append('capa', document.getElementById("capa").value);
+  
   let url = 'http://127.0.0.1:5000/adicionar_livro';
   fetch(url, {
     method: 'post',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: json
+    body: dados
   })
     .then(async res => {
       if (res.ok) {

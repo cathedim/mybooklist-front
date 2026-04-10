@@ -152,7 +152,12 @@ formulario.addEventListener("submit", function(e) {
       }
       else {
         const erro = await res.text(); 
-        alert(erro);
+        if (erro.includes("valid integer")) {
+          alert("Erro: ano de publicação precisa ser um número!")
+        }
+        else {
+          alert(erro);
+        }
       }
     })
     .catch((error) => {

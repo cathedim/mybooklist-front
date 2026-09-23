@@ -28,7 +28,7 @@
             </div>
             <div id="div-adicionar">
                 <h4>Adicionar novo livro</h4>
-                <form id="formularioAdicionar">
+                <form id="formulario_adicionar">
                     <label for="nome">Nome</label>
                     <br><input type="text" id="nome" name="nome">
                     <br><br><label for="autor">Autor</label>
@@ -44,9 +44,28 @@
                     <input type="submit" class="btn-formulario" value="Adicionar">
                 </form> 
             </div>
+            <div id="div-editar">
+                <h4>Editar livro</h4>
+                <form id="formulario_editar">
+                    <input id="nome_antigo_editar" style="display: none">
+                    <label for="nome_editar">Nome</label>
+                    <br><input type="text" id="nome_editar" name="nome_editar">
+                    <br><br><label for="autor_editar">Autor</label>
+                    <br><input type="text" id="autor_editar" name="autor_editar">
+                    <br><br><label for="ano_publicacao_editar">Ano de publicação</label>
+                    <br><input type="text" id="ano_publicacao_editar" name="ano_publicacao_editar">
+                    <br><br><label for="capa_editar">Capa</label>
+                    <div id="ajuda">
+                        <img id="icon-ajuda" src="img/help.png">
+                        <p id="texto-ajuda">Endereço da imagem (.png, .jpg ou .jpeg)</p>
+                    </div>
+                    <br><input type="text" id="capa_editar" name="capa_editar"><br><br>
+                    <input type="submit" class="btn-formulario" value="Editar">
+                </form> 
+            </div>
             <div id="div-busca-avancada">
                 <h4>Busca avançada</h4>
-                <form id="formularioBuscaAvancada">
+                <form id="formulario_busca_avancada">
                     <input type="text" id="busca-avancada" name="busca"><br><br>
                     <input type="radio" id="nome-busca" name="tipo-busca" value="Nome" checked>
                     <label for="nome-busca">Nome</label>

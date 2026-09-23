@@ -67,6 +67,14 @@ h3 {
     width: 310px;
 }
 
+#div-editar {
+    display: none;
+    border: 2px solid #dbc2db;
+    padding: 5px 20px 20px;
+    margin: auto;
+    width: 310px;
+}
+
 #div-busca-avancada {
     display: none;
     border: 2px solid #dbc2db;
@@ -155,6 +163,10 @@ li {
 #loading {
     margin: auto;
     display: block;
+}
+
+#infos-adicionais {
+    display: none;
 }
 
 .btn-paginacao {

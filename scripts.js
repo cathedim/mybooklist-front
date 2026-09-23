@@ -1,7 +1,8 @@
 window.onload = listarLivros();
 const divLivros = document.getElementById('livros');
-const formularioAdicionar = document.getElementById("formularioAdicionar");
-const formularioBuscaAvancada = document.getElementById("formularioBuscaAvancada");
+const formularioAdicionar = document.getElementById("formulario_adicionar");
+const formularioEditar = document.getElementById("formulario_editar");
+const formularioBuscaAvancada = document.getElementById("formulario_busca_avancada");
 const list = document.querySelector("#livros");
 const prevButton = document.querySelector("#prev");
 const nextButton = document.querySelector("#next");
@@ -21,6 +22,17 @@ function mostraAdicionarLivro() {
   }
   else {
     divAdicionar.style.display = "none";
+  }
+}
+
+function mostraEditarLivro() {
+  divEditar = document.getElementById('div-editar');
+  
+  if (divEditar.style.display == "none" || divEditar.style.display == "") {
+    divEditar.style.display = "block";
+  }
+  else {
+    divEditar.style.display = "none";
   }
 }
 
@@ -75,7 +87,7 @@ async function listarLivros() {
           + "   <p class=\"titulo\"" + (listaLivros[i].nome.length > 22 ? "style=\"font-size:11px\"" : "") + ">" + listaLivros[i].nome + "</p>"
           + "   <p class=\"autor\"" + (listaLivros[i].autor.length > 22 ? "style=\"font-size:11px\"" : "") + ">" + listaLivros[i].autor + "</p>"
           + "   <p class=\"ano_publicacao\">" + listaLivros[i].ano_publicacao + "</p>"
-          + "   <img class=\"icone\" src=\"img/edit.png\" alt=\"Editar livro\" onClick=\"editarLivro('" + listaLivros[i].nome.replace("'", "\\'") + "')\">"
+          + "   <img class=\"icone\" src=\"img/edit.png\" alt=\"Editar livro\" onClick=\"montaEditarLivro('" + listaLivros[i].nome.replace("'", "\\'") + "', '" + listaLivros[i].autor + "', '" + listaLivros[i].ano_publicacao + "', '" + listaLivros[i].capa + "')\">"
           + "   <img class=\"icone\" src=\"img/delete.png\" alt=\"Deletar livro\" onClick=\"deletarLivro('" + listaLivros[i].nome.replace("'", "\\'") + "')\">"
           + "</li>"
       }
@@ -124,6 +136,57 @@ async function buscarLivro() {
       }
     }
   }, 1000);
+}
+
+function montaEditarLivro(nome, autor, ano_publicacao, capa) {
+  mostraEditarLivro();
+  document.getElementById("nome_antigo_editar").value = nome;
+  document.getElementById("nome_editar").value = nome;
+  document.getElementById("autor_editar").value = autor;
+  document.getElementById("ano_publicacao_editar").value = ano_publicacao;
+  document.getElementById("capa_editar").value = capa;
+}
+
+formularioEditar.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const dados = new FormData();
+  dados.append('nome_antigo', document.getElementById("nome_antigo_editar").value);
+  dados.append('nome_novo', document.getElementById("nome_editar").value);
+  dados.append('autor_novo', document.getElementById("autor_editar").value);
+  dados.append('ano_publicacao_novo', document.getElementById("ano_publicacao_editar").value);
+  dados.append('capa_nova', document.getElementById("capa_editar").value);
+  
+  editarLivro(dados);
+})
+
+function editarLivro(dados) {
+  let url = 'http://127.0.0.1:5000/atualizar_livro';
+  fetch(url, {
+    method: 'put',
+    body: dados
+  })
+    .then(async res => {
+      if (res.ok) {
+        alert("Livro '"+dados.get("nome_antigo")+"' editado com sucesso!");
+        formularioAdicionar.reset();
+      }
+      else {
+        const erro = await res.text(); 
+        if (erro.includes("valid integer")) {
+          alert("Erro: ano de publicação precisa ser um número!")
+        }
+        else {
+          alert(erro);
+        }
+      }
+    })
+    .catch((error) => {
+      console.error('Erro: ', error.message);
+    });
+
+  recarregarLivros();
+  mostraEditarLivro();
 }
 
 function deletarLivro(nome) {
@@ -197,7 +260,7 @@ function adicionarLivro(dados) {
 formularioBuscaAvancada.addEventListener("submit", async function(e) {
   e.preventDefault();
 
-  const formulario = document.getElementById("formularioBuscaAvancada");
+  const formulario = document.getElementById("formulario_busca_avancada");
   const formData = new FormData(formulario);
   const tipoSelecionado = formData.get("tipo-busca");
 
@@ -224,7 +287,7 @@ formularioBuscaAvancada.addEventListener("submit", async function(e) {
 
     setTimeout(function() {
       tratamentoRespostaAPI(resposta);
-    }, 1000);
+    }, 2000);
 })
 
 function tratamentoRespostaAPI(resposta) {
@@ -240,11 +303,15 @@ function tratamentoRespostaAPI(resposta) {
         }
           
         divLivros.innerHTML += 
-            "<li class=\"livro\" id=\"resposta['docs'][i]['cover_edition_key']\">"
+            "<li class=\"livro\" id=\"" + resposta['docs'][i]['cover_edition_key'] + "\">"
           + "   <img class=\"capa\" src=\"https://covers.openlibrary.org/b/id/" + resposta['docs'][i]['cover_i'] + "-L.jpg\" alt=\"Capa do livro "+ resposta['docs'][i]['title'] +"\">"
           + "   <p class=\"titulo\"" + (resposta['docs'][i]['title'].length > 22 ? "style=\"font-size:11px\"" : "") + ">" + resposta['docs'][i]['title'] + "</p>"
-          + "   <p class=\"autor\"" + (resposta['docs'][i]['author_name'].length > 20 ? "style=\"font-size:11px\"" : "") + ">" + resposta['docs'][i]['author_name'] + "</p>"
+          + "   <p class=\"autor\"" + (resposta['docs'][i]['author_name'].length > 22  ? "style=\"font-size:11px\"" : "") + ">" + resposta['docs'][i]['author_name'] + "</p>"
           + "   <p class=\"ano_publicacao\">" + resposta['docs'][i]['first_publish_year'] + "</p>"
+          + "   <div id=\"infos_adicionais_" + resposta['docs'][i]['cover_edition_key'] + "\" class=\"infos_adicionais\">"
+          + "      <p id=\"num_paginas_" + resposta['docs'][i]['cover_edition_key'] + "\"></p>"
+          + "      <p id=\"editora_" + resposta['docs'][i]['cover_edition_key'] + "\"></p>"
+          + "   </div>"
           + "   <img class=\"icone\" src=\"img/add.png\" alt=\"Adicionar\" onClick=\"adicionarAColecao('" + resposta['docs'][i]['title'] + "', '" + resposta['docs'][i]['author_name'] + "', " + resposta['docs'][i]['first_publish_year'] + ", 'https://covers.openlibrary.org/b/id/" + resposta['docs'][i]['cover_i'] + "-L.jpg')\">"
           + "   <img class=\"icone\" src=\"img/info.png\" alt=\"Informações adicionais\" onClick=\"infosLivro('" + resposta['docs'][i]['cover_edition_key'] + "')\">"
           + "</li>"
@@ -281,7 +348,13 @@ async function infosLivro(ol_id) {
       console.error('Erro: ', error);
     });
 
-    alert('= Informações adicionais =\n\nPáginas: '+resposta['number_of_pages']+'\nEditora: '+resposta['publishers']);
+    document.getElementById(ol_id).style = "list-style-type: none;display: inline-block;margin: 20px;padding: 20px;border: 2px dashed #dbc2db;text-align: center;width: 200px;height: 415px;";
+    document.getElementById("infos_adicionais_"+ol_id).style.display = "block";
+
+    document.getElementById("num_paginas_"+ol_id).innerHTML = resposta['number_of_pages'] + " páginas";
+    document.getElementById("editora_"+ol_id).innerHTML = "Editora: " + resposta['publishers'];
+
+    //alert('= Informações adicionais =\n\nPáginas: '+resposta['number_of_pages']+'\nEditora: '+resposta['publishers']);
 }
 
 /*

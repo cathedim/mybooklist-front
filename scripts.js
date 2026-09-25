@@ -3,16 +3,6 @@ const divLivros = document.getElementById('livros');
 const formularioAdicionar = document.getElementById("formulario_adicionar");
 const formularioEditar = document.getElementById("formulario_editar");
 const formularioBuscaAvancada = document.getElementById("formulario_busca_avancada");
-const list = document.querySelector("#livros");
-const prevButton = document.querySelector("#prev");
-const nextButton = document.querySelector("#next");
-const pageNumberValue = document.querySelector("#page-number")
-
-let startIndex = 0;
-let endIndex = 10;
-let pageNumber = 0;
-
-pageNumberValue.value = pageNumber
 
 function mostraAdicionarLivro() {
   divAdicionar = document.getElementById('div-adicionar');
@@ -255,6 +245,7 @@ function adicionarLivro(dados) {
     });
 
     recarregarLivros();
+    mostraAdicionarLivro();
 }
 
 formularioBuscaAvancada.addEventListener("submit", async function(e) {
@@ -317,7 +308,6 @@ function tratamentoRespostaAPI(resposta) {
           + "</li>"
     }
   }
-  //paginar(resposta['docs']);
 }
 
 function adicionarAColecao(nome, autor, ano_publicacao, capa) {
@@ -353,60 +343,4 @@ async function infosLivro(ol_id) {
 
     document.getElementById("num_paginas_"+ol_id).innerHTML = resposta['number_of_pages'] + " páginas";
     document.getElementById("editora_"+ol_id).innerHTML = "Editora: " + resposta['publishers'];
-
-    //alert('= Informações adicionais =\n\nPáginas: '+resposta['number_of_pages']+'\nEditora: '+resposta['publishers']);
 }
-
-/*
-prevButton.addEventListener("click", () => {
-  if (endIndex < 20) {
-    startIndex = 0;
-    endIndex = 10;
-  } else {
-    startIndex -= 10;
-    endIndex -= 10;
-    pageNumber -= 1;
-  }
-  pageNumberValue.value = pageNumber;
-  paginar();
-});
-
-nextButton.addEventListener("click", () => {
-  if (endIndex < respostas.length) {
-    startIndex += 10;
-    endIndex += 10;
-    pageNumber += 1;
-  }
-  pageNumberValue.value = pageNumber;
-  paginar();
-});
-
-pageNumberValue.addEventListener("change",(e) => {
-  let currentPageNumber = Number.parseInt(e.target.value)
-  let maxPageNumber = Math.floor(respostas.length/10)
-  if(currentPageNumber > maxPageNumber){
-   currentPageNumber = maxPageNumber;
-    e.target.value = value
-  }
-  else if(currentPageNumber < 0){
-    currentPageNumber = 0;
-    e.target.value = value
-  }
-   startIndex = currentPageNumber * 10;
-   endIndex = startIndex + 10
-   pageNumber = currentPageNumber
-   paginar();
-})
-
-const paginar = (respostas) => {
-  console.log("páginar")
-  const paginacao = respostas
-    .slice(startIndex, endIndex)
-    .map((row) => {
-      return `<li>${row.name}</li>`;
-    })
-    .join("");
-
-  list.innerHTML = paginacao;
-}
-//paginacao();*/

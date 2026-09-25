@@ -16,8 +16,8 @@ Abrir o terminal como administrador no diretório que possui o arquivo **Dockerf
 
 Em seguida, para rodar o projeto, execute o comando:
 
-#### `docker run -p 5000:5000 mybooklist-front`
+#### `docker run -p 8080:80 mybooklist-front`
 
-Para abrir a aplicação, basta acessar o link [http://localhost:5000/](http://localhost:5000/) no navegador.
+Para abrir a aplicação, basta acessar o link [http://localhost:8080/](http://localhost:8080/) no navegador.
 
 ## Fluxograma do projeto

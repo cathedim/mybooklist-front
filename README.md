@@ -21,3 +21,5 @@ Em seguida, para rodar o projeto, execute o comando:
 Para abrir a aplicação, basta acessar o link [http://localhost:8080/](http://localhost:8080/) no navegador.
 
 ## Fluxograma do projeto
+
+<img width="1760" height="2080" alt="Fluxograma indicando componentes do projeto" src="https://github.com/user-attachments/assets/8d835698-53aa-4254-9e2d-e7bb370e927b" />
